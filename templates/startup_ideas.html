@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h2 class="text-2xl font-bold mb-6">Top Startup Ideas for {{ keyword }}</h2>
+    
+    <div id="startupIdeas" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for idea in startup_ideas %}
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <h3 class="text-xl font-semibold mb-4">{{ idea.name }}</h3>
+            
+            <div class="mb-4">
+                <h4 class="font-medium text-gray-700">Problem Statement:</h4>
+                <p class="text-gray-600">{{ idea.problem_statement }}</p>
+            </div>
+            
+            <div class="mb-4">
+                <h4 class="font-medium text-gray-700">Solution:</h4>
+                <ul class="list-disc pl-5">
+                    {% for point in idea.solution %}
+                    <li class="text-gray-600">{{ point }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="mb-4">
+                <h4 class="font-medium text-gray-700">Pain Points Addressed:</h4>
+                <ul class="list-disc pl-5">
+                    {% for point in idea.pain_points %}
+                    <li class="text-gray-600">{{ point }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="mt-4 pt-4 border-t">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-500">Market Size: ${{ "{:,.0f}".format(idea.market_size) }}</span>
+                    <a href="/startup/{{ idea.id }}" class="text-blue-500 hover:text-blue-700">View Details →</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

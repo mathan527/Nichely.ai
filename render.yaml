@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: nichely-app
+    env: python
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      # Add your API keys as environment variables in Render dashboard
+      # - key: SUPABASE_URL
+      #   value: your_supabase_url_here
+      # - key: SUPABASE_KEY
+      #   value: your_supabase_key_here
+      # - key: GROQ_API_KEY
+      #   value: your_groq_api_key_here
+      # - key: REDDIT_CLIENT_ID
+      #   value: your_reddit_client_id_here
+      # - key: REDDIT_CLIENT_SECRET
+      #   value: your_reddit_client_secret_here
+      # - key: REDDIT_USERNAME
+      #   value: your_reddit_username_here
+      # - key: REDDIT_PASSWORD
+      #   value: your_reddit_password_here
+    
+    # Auto-deploy settings
+    autoDeploy: true
+    
+    # Health check settings
+    
+    # Build settings
+    buildFilter:
+      paths:
+      - "**/*.py"
+      - "**/*.html"
+      - "**/*.js"
+      - "**/*.css"
+      - "requirements.txt"
+      - "render.yaml"

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nichely - Reddit Niche Analysis</title>
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAdlJREFUWEftl0FOwzAQRf+kqhATkGBHWLEkJ2DHBTgGN+jlOAQX4ATsWLKEE7BBggUgVfyXxsQ4TuzYaVq1EotKrTN+/89/ZuyOsOGHNmwfHYEjwQQBVQKniUNy8t+JXAG4AfAC4BXAhT0tUc8A7gDcA/gA8GgvF3kKkZqAn/gTwIX1nBPy91MAz7aGr7lzBLwwrukRwIWV+YdDwPe8BEkVAQr/DuA8kNwn4JLhJGkAebL3SCUwJ+DbPwK4jSQwl4Dbh2tSN6dMgAS+PNkXCbDxuLboAPwCeANwDOA0ksCcBOaE/AXAk23CJPBtq47b8QbgxG7E6jQVoQ0oZ9wO7QfkCMAugB8AdF5FoGQIQoDe0/MpUSXId74H8BkqbwiBUiEQEWJ4uEbDwyIEUglwbY7TjvZgzz27AVh7vXsQAtyIYUpNwB+JLSKQGoLQyEtKQCKR5Cj2KAFRzUSGJZlNQE5D2ZCkJEDPacDYlUzXkxKwuQhICMTuUBuPdQh47TL7GQTkIhKzhdZ+rDJcrBmNP4ZqXk0AeBEZkc2OAJvRGER6xkSgZ7HlQp6TwPgQKX0hGcV7VwAuAS7HJ+NTcjxcjFqxClw2/L9bjMA/E/gDtI2gIZRzEEoAAAAASUVORK5CYII=">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/css/loading.css">
+    <link rel="stylesheet" href="/static/css/intro.css">
+    <style>
+        /* Professional gradient background matching intro */
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Professional header styling */
+        .professional-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .main-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .main-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .brand-text {
+            color: white;
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.02em;
+        }
+
+        .tagline {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Content containers with glass effect */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        .leaderboard-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            background-color: white;
+            transition: transform 0.2s ease-in-out;
+        }
+        .leaderboard-item:hover {
+            transform: translateY(-2px);
+        }
+        .top-three {
+            background-color: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+        }
+        #nicheIdeas {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+            width: 100%;
+        }
+        
+        @media (max-width: 1200px) {
+            #nicheIdeas {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 900px) {
+            #nicheIdeas {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .chart-container {
+            position: relative;
+            height: 200px;
+            margin-top: 1rem;
+        }
+        .chart-container canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        @media (max-width: 768px) {
+            #nicheIdeas {
+                grid-template-columns: 1fr;
+            }
+        }
+        .idea-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .idea-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Professional Header with Logo -->
+    <header class="professional-header">
+        <div class="container mx-auto px-4">
+            <div class="logo-container">
+                <img src="/static/src.webp" alt="Nichely Logo" class="main-logo" onerror="this.style.display='none'">
+                <div>
+                    <h1 class="brand-text">Nichely</h1>
+                    <p class="tagline">AI-Powered Niche Discovery Platform</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
+        
+        <!-- Search Form -->
+        <div class="max-w-2xl mx-auto glass-container rounded-lg p-6 mb-8">
+            <div class="flex gap-4">
+                <input type="text" id="keyword" placeholder="Enter niche (e.g., fintech, healthtech, edtech)..." 
+                       class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button onclick="analyzeNiche()" 
+                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Generate Ideas
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="hidden">
+            <div class="max-w-2xl mx-auto glass-container rounded-lg p-6 mb-8">
+                <div class="flex items-center justify-center space-x-4">
+                    <div class="loading w-4 h-4 bg-blue-600 rounded-full"></div>
+                    <div class="loading w-4 h-4 bg-blue-600 rounded-full" style="animation-delay: 0.2s"></div>
+                    <div class="loading w-4 h-4 bg-blue-600 rounded-full" style="animation-delay: 0.4s"></div>
+                </div>
+                <p class="text-center mt-4 text-gray-600">AI is analyzing market data and generating ideas...</p>
+            </div>
+        </div>
+
+        <!-- Results Container -->
+        <div id="results" class="hidden">
+
+            <!-- AI Generated Startup Ideas -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold mb-2 text-white">AI Generated Startup Ideas</h2>
+                <p class="text-gray-200 mb-6">Data-driven opportunities discovered through AI market analysis</p>
+                <div id="nicheIdeas" class="grid grid-cols-1 gap-8"></div>
+            </div>
+
+            <!-- Market Analysis Visualizations -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-6 text-white">Market Analysis & Insights</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-container rounded-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Market Sentiment</h3>
+                        <img id="sentimentChart" alt="Sentiment Analysis" class="mx-auto max-w-full h-auto">
+                    </div>
+                    <div class="glass-container rounded-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800">Key Topics</h3>
+                        <img id="topicsChart" alt="Topic Analysis" class="mx-auto max-w-full h-auto">
+                    </div>
+                </div>
+            </div>
+
+            <template id="startupCardTemplate">
+                <div class="startup-box glass-container rounded-lg p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer border border-white/30" 
+                     onclick="goToStartupDetail('{id}')">
+                    <!-- Title -->
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">{name}</h3>
+                    
+                    <!-- Problem Statement -->
+                    <div class="bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-400 rounded-lg p-4">
+                        <h4 class="font-semibold text-red-900 mb-2 flex items-center">
+                            <span class="mr-2">🎯</span>
+                            Market Problem
+                        </h4>
+                        <p class="text-red-800 text-sm leading-relaxed font-medium">{problemStatement}</p>
+                    </div>
+                    
+                    <!-- Click hint -->
+                    <div class="mt-4 text-center">
+                        <span class="text-blue-700 text-sm font-semibold bg-blue-50 px-3 py-1 rounded-full">
+                            Click for AI Analysis →
+                        </span>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+
+        <!-- Error State -->
+        <div id="error" class="hidden max-w-2xl mx-auto bg-red-50 border-l-4 border-red-500 p-4 mb-8">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p id="errorMessage" class="text-sm text-red-700"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="max-w-2xl mx-auto glass-container rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">Popular Searches</h2>
+            <div id="leaderboard" class="space-y-2"></div>
+        </div>
+    </div>
+
+    <script src="/static/js/intro.js"></script>
+    <script src="/static/js/loading.js"></script>
+    <script src="/static/js/niche-analysis.js"></script>
+</body>
+</html>
